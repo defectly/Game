@@ -8,10 +8,6 @@ public class Wizard extends Hero {
 
     public Wizard(String name, Vector position) {
         super(name, "Wizard", 100, position);
-    }
-
-    @Override
-    public void damage(int damage) {
-        Health -= damage;
+        Initiative = 1;
     }
 }

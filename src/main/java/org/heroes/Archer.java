@@ -1,51 +1,49 @@
 package org.heroes;
 
 import org.coordinates.Vector;
+
 import java.util.ArrayList;
 
-public class Archer extends Hero {
-
+public abstract class Archer extends Hero {
     int Range = 45;
     int Arrows = 10;
 
-    public Archer(String name, Vector position) {
-        super(name, "Archer", 100, position);
+    public Archer(String name, String definition, int health, Vector position) {
+        super(name, definition, health, position);
+        Initiative = 3;
     }
 
     @Override
-    public void damage(int damage) {
-        Health -= damage;
+    public void attack(Hero hero) {
+        hero.damage(10);
     }
 
-    public Hero getNearestEnemy(ArrayList<Hero> enemies) {
-        Hero hero = null;
-        float min = 900;
+    @Override
+    public void step(Hero hero) {
+        if(Health <= 0)
+            return;
+        if(Arrows <= 0)
+            return;
 
-        for(var enemy : enemies) {
-            var distance = Position.enemyDistance(enemy.Position);
-
-            if(min > distance) {
-                min = distance;
-                hero = enemy;
-            }
-        }
-
-        return hero;
+        attack(hero);
+        System.out.println(hero);
     }
+    @Override
+    public void step(ArrayList<Hero> enemies) {
+        if(Health <= 0)
+            return;
+        if(Arrows <= 0)
+            return;
 
-    public Float getNearestEnemyDistance(ArrayList<Hero> enemies) {
-        Hero hero = null;
-        float min = 900;
+        var enemyDistance = getNearestEnemyDistance(enemies);
 
-        for(var enemy : enemies) {
-            var distance = Position.enemyDistance(enemy.Position);
+        if(enemyDistance > Range)
+            return;
 
-            if(min > distance) {
-                min = distance;
-                hero = enemy;
-            }
-        }
+        var enemy = getNearestEnemy(enemies);
 
-        return min;
+        attack(enemy);
+        Arrows -= 1;
+        System.out.println(enemy);
     }
 }

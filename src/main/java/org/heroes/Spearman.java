@@ -8,10 +8,6 @@ public class Spearman extends Hero {
 
     public Spearman(String name, Vector position) {
         super(name, "Spearman", 100, position);
-    }
-
-    @Override
-    public void damage(int damage) {
-        Health -= damage;
+        Initiative = 2;
     }
 }

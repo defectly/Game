@@ -6,7 +6,6 @@ import org.heroes.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public class Main {
@@ -18,32 +17,14 @@ public class Main {
         light = generateTeam(TeamSide.Light);
         darkness = generateTeam(TeamSide.Darkness);
 
-        for(var hero : light.Heroes) {
-            if(Objects.equals(hero.getDefinition(), "Archer")) {
-                var archer = (Archer)hero;
+        light.Heroes.forEach(h -> h.step(darkness.HeroesByInitiative));
+        System.out.println("*************************************");
+        darkness.Heroes.forEach(h -> h.step(light.HeroesByInitiative));
+        System.out.println("*************************************");
 
-                System.out.println(hero + ", " + positionToString(hero.getPosition()) + ", Nearest enemy: "
-                        + archer.getNearestEnemy(darkness.Heroes).getName() + ", Distance: " + archer.getNearestEnemyDistance(darkness.Heroes));
-            }
-            else
-                System.out.println(hero + ", " + positionToString(hero.getPosition()));
-        }
-
-        System.out.println();
-
-        for(var hero : darkness.Heroes) {
-            if(Objects.equals(hero.getDefinition(), "Archer")) {
-                var archer = (Archer)hero;
-                var nearestEnemy = archer.getNearestEnemy(light.Heroes);
-
-                System.out.println(hero + ", " + positionToString(hero.getPosition()) + ", Nearest enemy: "
-                        + archer.getNearestEnemy(light.Heroes).getName() + ", Distance: " + archer.getNearestEnemyDistance(light.Heroes));
-            }
-            else
-                System.out.println(hero + ", " + positionToString(hero.getPosition()));
-        }
-
-        light.Heroes.forEach(h -> h.printEnemyDistance(darkness.Heroes));
+        light.HeroesByInitiative.forEach(System.out::println);
+        System.out.println("*************************************");
+        darkness.HeroesByInitiative.forEach(System.out::println);
     }
 
 
@@ -63,7 +44,7 @@ public class Main {
     }
     static Hero GetRandomHero(Vector position) {
         return switch (random.nextInt(1,8)) {
-            case 1 -> new Archer(getRandomName(), position);
+            case 1 -> new Crossbower(getRandomName(), position);
             case 2 -> new Bandit(getRandomName(), position);
             case 3 -> new Priest(getRandomName(), position);
             case 4 -> new Sniper(getRandomName(), position);

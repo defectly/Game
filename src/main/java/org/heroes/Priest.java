@@ -10,10 +10,6 @@ public class Priest extends Hero {
 
     public Priest(String name, Vector position) {
         super(name, "Priest", 100, position);
-    }
-
-    @Override
-    public void damage(int damage) {
-        Health -= damage;
+        Initiative = 1;
     }
 }

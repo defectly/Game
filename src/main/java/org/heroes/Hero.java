@@ -2,13 +2,12 @@ package org.heroes;
 
 import org.coordinates.Vector;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public abstract class Hero {
+public abstract class Hero implements IHero {
     String Name;
     String Definition;
+    protected int Initiative;
     int Health;
     Vector Position;
 
@@ -20,13 +19,52 @@ public abstract class Hero {
         Position = position;
     }
 
-    public abstract void damage(int damage);
+    public void damage(int damage) {
+        if(damage > Health)
+            Health = 0;
+        else
+            Health -= damage;
+    }
+    protected void attack(Hero hero) {
+    }
     public Vector getPosition() {
         return Position;
     }
 
-    public void printEnemyDistance(ArrayList<Hero> enemies) {
+    protected void printEnemyDistance(ArrayList<Hero> enemies) {
         enemies.forEach(e -> System.out.println(Position.enemyDistance(e.Position)));
+    }
+
+    protected Float getNearestEnemyDistance(ArrayList<Hero> enemies) {
+        Hero hero = null;
+        float min = 900;
+
+        for(var enemy : enemies) {
+            var distance = Position.enemyDistance(enemy.Position);
+
+            if(min > distance) {
+                min = distance;
+                hero = enemy;
+            }
+        }
+
+        return min;
+    }
+
+    protected Hero getNearestEnemy(ArrayList<Hero> enemies) {
+        Hero hero = null;
+        float min = 900;
+
+        for(var enemy : enemies) {
+            var distance = Position.enemyDistance(enemy.Position);
+
+            if(min > distance) {
+                min = distance;
+                hero = enemy;
+            }
+        }
+
+        return hero;
     }
 
     public String getDefinition() {
@@ -36,9 +74,17 @@ public abstract class Hero {
         return Name;
     }
 
+    public void step(Hero hero) {}
+    public void step(ArrayList<Hero> enemies) {}
+
+    public Integer getInitiative() {
+        return Initiative;
+    }
+
+
     @Override
     public String toString()
     {
-        return Name + ", Definition: " + Definition;
+        return Name + ", Definition: " + Definition + ", " + Health + ", " + Initiative;
     }
 }

@@ -6,10 +6,10 @@ public class Villager extends Hero {
 
     public Villager(String name, Vector position) {
         super(name, "Villager", 100, position);
+        Initiative = 0;
     }
 
-    @Override
-    public void damage(int damage) {
-        Health -= damage;
+    public void reload(Archer archer) {
+        archer.Arrows += 1;
     }
 }
