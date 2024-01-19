@@ -2,7 +2,7 @@ package org.heroes;
 
 import org.coordinates.Vector;
 
-public class Spearman extends Hero {
+public class Spearman extends Melee {
 
     int Range = 30;
 

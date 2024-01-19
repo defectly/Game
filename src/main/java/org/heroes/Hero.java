@@ -9,7 +9,7 @@ public abstract class Hero implements IHero {
     String Definition;
     protected int Initiative;
     int Health;
-    Vector Position;
+    protected Vector Position;
 
     protected Hero(String name, String definition, int health, Vector position)
     {

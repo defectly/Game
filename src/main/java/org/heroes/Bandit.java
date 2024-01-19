@@ -2,7 +2,7 @@ package org.heroes;
 
 import org.coordinates.Vector;
 
-public class Bandit extends Hero {
+public class Bandit extends Melee {
     int Strength = 50;
 
     public Bandit(String name, Vector position) {
